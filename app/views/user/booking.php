@@ -42,7 +42,25 @@
           <div class="col-12"><label class="form-label fw-bold">Catatan Khusus</label><textarea name="notes" class="form-control" rows="3"></textarea></div>
           <div class="col-12"><label class="form-label fw-bold">Upload Foto Hewan</label><input type="file" name="pet_image" class="form-control image-input" accept=".jpg,.jpeg,.png" data-preview="#petPreview" required><img id="petPreview" class="table-thumb d-none mt-3" alt="Preview"></div>
         </div>
-        <button class="btn btn-primary-paw mt-4" type="submit"><i class="bi bi-calendar-check me-2"></i>Kirim Booking</button>
+        <div class="mt-4">
+            <label for="payment_proof" class="form-label fw-bold">
+                Upload Bukti Pembayaran
+            </label>
+
+            <input
+                type="file"
+                class="form-control image-input"
+                id="payment_proof"
+                name="payment_proof"
+                accept=".jpg,.jpeg,.png">
+
+            <small class="text-muted">
+                Upload bukti pembayaran dalam format JPG, JPEG, atau PNG (maks. 2 MB).
+            </small>
+        </div>
+      <button class="btn btn-primary-paw mt-4" type="submit">
+          <i class="bi bi-calendar-check me-2"></i>Kirim Booking
+      </button>
       </form>
     </div>
   </div>

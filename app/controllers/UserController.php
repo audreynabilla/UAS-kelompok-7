@@ -55,6 +55,12 @@ class UserController
             redirect('index.php?page=booking');
         }
 
+        $paymentProof = uploadImage(
+            'payment_proof',
+            'payments',
+            false
+        );
+
         $petImage = uploadImage('pet_image', 'pets', true);
         $this->bookings->create([
             'user_id' => $_SESSION['user_id'],
@@ -62,6 +68,7 @@ class UserController
             'pet_name' => trim($_POST['pet_name']),
             'pet_type' => $_POST['pet_type'],
             'pet_image' => $petImage,
+            'payment_proof' => $paymentProof,
             'booking_date' => $_POST['booking_date'],
             'booking_time' => $_POST['booking_time'],
             'notes' => trim($_POST['notes'] ?? ''),
@@ -74,9 +81,12 @@ class UserController
     public function riwayat(): void
     {
         requireLogin();
-        render('user/riwayat', ['title' => 'Riwayat Booking', 'bookings' => $this->bookings->userBookings((int) $_SESSION['user_id'])]);
-    }
 
+        render('user/riwayat', [
+            'title' => 'Riwayat Booking',
+            'bookings' => $this->bookings->userBookings((int) $_SESSION['user_id'])
+        ]);
+}
     public function cancelBooking(): void
     {
         requireLogin();

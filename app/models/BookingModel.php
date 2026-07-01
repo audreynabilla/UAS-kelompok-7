@@ -33,21 +33,56 @@ class BookingModel
     }
 
     public function all(?string $status = null): array
-    {
-        if ($status) {
-            $stmt = $this->pdo->prepare('SELECT b.*, u.name AS user_name, s.name AS service_name FROM bookings b JOIN users u ON u.id = b.user_id JOIN services s ON s.id = b.service_id WHERE b.status = ? ORDER BY b.created_at DESC');
-            $stmt->execute([$status]);
+        {
+            if ($status) {
+                $stmt = $this->pdo->prepare('
+                    SELECT
+                        b.*,
+                        u.name AS user_name,
+                        s.name AS service_name,
+                        s.category AS service_category
+                    FROM bookings b
+                    JOIN users u ON u.id = b.user_id
+                    JOIN services s ON s.id = b.service_id
+                    WHERE b.status = ?
+                    ORDER BY b.created_at DESC
+                ');
+                $stmt->execute([$status]);
+                return $stmt->fetchAll();
+            }
+
+            $stmt = $this->pdo->prepare('
+                SELECT
+                    b.*,
+                    u.name AS user_name,
+                    s.name AS service_name,
+                    s.category AS service_category
+                FROM bookings b
+                JOIN users u ON u.id = b.user_id
+                JOIN services s ON s.id = b.service_id
+                ORDER BY b.created_at DESC
+            ');
+            $stmt->execute();
             return $stmt->fetchAll();
         }
-        $stmt = $this->pdo->prepare('SELECT b.*, u.name AS user_name, s.name AS service_name FROM bookings b JOIN users u ON u.id = b.user_id JOIN services s ON s.id = b.service_id ORDER BY b.created_at DESC');
-        $stmt->execute();
-        return $stmt->fetchAll();
-    }
 
     public function latest(int $limit = 5): array
     {
         $limit = max(1, min(20, $limit));
-        $stmt = $this->pdo->prepare('SELECT b.*, u.name AS user_name, s.name AS service_name FROM bookings b JOIN users u ON u.id = b.user_id JOIN services s ON s.id = b.service_id ORDER BY b.created_at DESC LIMIT ?');
+
+        $stmt = $this->pdo->prepare('
+            SELECT
+                b.*,
+                u.name AS user_name,
+                s.name AS service_name,
+                s.category AS service_category
+            FROM bookings b
+            JOIN users u ON u.id = b.user_id
+            JOIN services s ON s.id = b.service_id
+            ORDER BY b.created_at DESC
+            LIMIT ?
+        ');
+
         $stmt->bindValue(1, $limit, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll();
@@ -55,9 +90,22 @@ class BookingModel
 
     public function find(int $id): ?array
     {
-        $stmt = $this->pdo->prepare('SELECT b.*, u.name AS user_name, s.name AS service_name FROM bookings b JOIN users u ON u.id = b.user_id JOIN services s ON s.id = b.service_id WHERE b.id = ? LIMIT 1');
+        $stmt = $this->pdo->prepare('
+            SELECT
+                b.*,
+                u.name AS user_name,
+                s.name AS service_name,
+                s.category AS service_category
+            FROM bookings b
+            JOIN users u ON u.id = b.user_id
+            JOIN services s ON s.id = b.service_id
+            WHERE b.id = ?
+            LIMIT 1
+        ');
+
         $stmt->execute([$id]);
         $booking = $stmt->fetch();
+
         return $booking ?: null;
     }
 
