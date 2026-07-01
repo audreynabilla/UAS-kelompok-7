@@ -88,6 +88,18 @@
                         >
                         <img id="petPreview" class="table-thumb d-none mt-3" alt="Preview">
                     </div>
+                    <div class="col-12">
+                        <label class="form-label fw-bold">Bukti Pembayaran</label>
+                        <input
+                            type="file"
+                            name="payment_proof"
+                            class="form-control image-input"
+                            accept=".jpg,.jpeg,.png"
+                            data-preview="#paymentPreview"
+                        >
+                        <img id="paymentPreview" class="table-thumb d-none mt-3" alt="Preview bukti pembayaran">
+                        <small class="text-muted">Opsional. JPG/PNG maks. 2MB.</small>
+                    </div>
                 </div>
                 <button class="btn btn-primary-paw mt-4">Simpan Booking</button>
             </form>

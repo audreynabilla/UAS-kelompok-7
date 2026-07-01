@@ -11,13 +11,14 @@ class BookingModel
 
     public function create(array $data): bool
     {
-        $stmt = $this->pdo->prepare('INSERT INTO bookings (user_id, service_id, pet_name, pet_type, pet_image, booking_date, booking_time, notes, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        $stmt = $this->pdo->prepare('INSERT INTO bookings (user_id, service_id, pet_name, pet_type, pet_image, payment_proof, booking_date, booking_time, notes, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
         return $stmt->execute([
             $data['user_id'],
             $data['service_id'],
             $data['pet_name'],
             $data['pet_type'],
             $data['pet_image'] ?? null,
+            $data['payment_proof'] ?? null,
             $data['booking_date'],
             $data['booking_time'],
             $data['notes'] ?? null,
@@ -137,13 +138,14 @@ class BookingModel
 
     public function update(int $id, array $data): bool
     {
-        $stmt = $this->pdo->prepare('UPDATE bookings SET user_id = ?, service_id = ?, pet_name = ?, pet_type = ?, pet_image = COALESCE(?, pet_image), booking_date = ?, booking_time = ?, notes = ?, status = ? WHERE id = ?');
+        $stmt = $this->pdo->prepare('UPDATE bookings SET user_id = ?, service_id = ?, pet_name = ?, pet_type = ?, pet_image = COALESCE(?, pet_image), payment_proof = COALESCE(?, payment_proof), booking_date = ?, booking_time = ?, notes = ?, status = ? WHERE id = ?');
         return $stmt->execute([
             $data['user_id'],
             $data['service_id'],
             $data['pet_name'],
             $data['pet_type'],
             $data['pet_image'] ?? null,
+            $data['payment_proof'] ?? null,
             $data['booking_date'],
             $data['booking_time'],
             $data['notes'] ?? null,

@@ -137,6 +137,34 @@
                             data-preview="#petPreview"
                         >
                     </div>
+                    <div class="col-12">
+                        <label class="form-label fw-bold">Bukti Pembayaran Saat Ini / Ganti</label>
+                        <br>
+                        <?php if (!empty($booking['payment_proof'])): ?>
+                            <a href="<?= baseUrl('uploads/payments/' . $booking['payment_proof']) ?>" target="_blank">
+                                <img
+                                    id="paymentPreview"
+                                    class="table-thumb mb-3"
+                                    src="<?= baseUrl('uploads/payments/' . $booking['payment_proof']) ?>"
+                                    alt="Bukti pembayaran"
+                                >
+                            </a>
+                        <?php else: ?>
+                            <img
+                                id="paymentPreview"
+                                class="table-thumb d-none mb-3"
+                                alt="Preview bukti pembayaran"
+                            >
+                        <?php endif; ?>
+                        <input
+                            type="file"
+                            name="payment_proof"
+                            class="form-control image-input"
+                            accept=".jpg,.jpeg,.png"
+                            data-preview="#paymentPreview"
+                        >
+                        <small class="text-muted">Opsional. Kosongkan jika tidak ingin mengganti bukti.</small>
+                    </div>
                 </div>               
                 <button class="btn btn-primary-paw mt-4">
                     Update Booking

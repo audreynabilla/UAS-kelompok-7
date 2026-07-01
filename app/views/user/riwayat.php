@@ -37,12 +37,13 @@
   <?php else: ?>
     <div class="soft-card p-3 table-responsive">
       <table class="table align-middle">
-        <thead><tr><th>No.</th><th>Foto Hewan</th><th>Layanan</th><th>Nama Hewan</th><th>Tanggal & Jam</th><th>Status</th><th>Aksi</th></tr></thead>
+        <thead><tr><th>No.</th><th>Foto Hewan</th><th>Bukti Bayar</th><th>Layanan</th><th>Nama Hewan</th><th>Tanggal & Jam</th><th>Status</th><th>Aksi</th></tr></thead>
         <tbody>
         <?php foreach ($bookings as $i => $b): ?>
           <tr>
             <td><?= $i + 1 ?></td>
             <td><?php if ($b['pet_image']): ?><img class="table-thumb" src="<?= baseUrl('uploads/pets/' . $b['pet_image']) ?>" alt="<?= e($b['pet_name']) ?>"><?php endif; ?></td>
+            <td><?php if (!empty($b['payment_proof'])): ?><a class="btn btn-outline-paw btn-sm" href="<?= baseUrl('uploads/payments/' . $b['payment_proof']) ?>" target="_blank">Lihat</a><?php else: ?><span class="text-muted">-</span><?php endif; ?></td>
             <td><?= e($b['service_name']) ?></td>
             <td><?= e($b['pet_name']) ?></td>
             <td><?= e($b['booking_date']) ?> <?= e(substr($b['booking_time'],0,5)) ?></td>

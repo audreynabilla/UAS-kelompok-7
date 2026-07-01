@@ -96,6 +96,7 @@ class AdminController
             verifyCsrf();
             $data = $this->bookingPayload(true);
             $data['pet_image'] = uploadImage('pet_image', 'pets', true);
+            $data['payment_proof'] = uploadImage('payment_proof', 'payments', false);
             $this->bookings->create($data);
             flash('success', 'Booking manual berhasil ditambahkan.');
             redirect('index.php?page=admin&section=bookings');
@@ -115,6 +116,13 @@ class AdminController
             verifyCsrf();
             $data = $this->bookingPayload(true);
             $data['pet_image'] = uploadImage('pet_image', 'pets', false);
+            $data['payment_proof'] = uploadImage('payment_proof', 'payments', false);
+            if ($data['pet_image'] && $booking['pet_image']) {
+                deleteUploadedFile('pets', $booking['pet_image']);
+            }
+            if ($data['payment_proof'] && !empty($booking['payment_proof'])) {
+                deleteUploadedFile('payments', $booking['payment_proof']);
+            }
             $this->bookings->update((int) $booking['id'], $data);
             flash('success', 'Booking berhasil diperbarui.');
             redirect('index.php?page=admin&section=bookings');
